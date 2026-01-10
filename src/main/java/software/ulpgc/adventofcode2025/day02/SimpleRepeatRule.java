@@ -1,6 +1,6 @@
 package software.ulpgc.adventofcode2025.day02;
 
-public class SimpleRepeatRule implements InvalidRule {
+public class SimpleRepeatRule implements IdRule {
     @Override
     public long evaluate(long id) {
         String idstr = String.valueOf(id);

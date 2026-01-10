@@ -1,7 +1,7 @@
 package software.ulpgc.adventofcode2025.day06;
 import java.util.*;
 
-public class StandardColumnAnalyzer implements MathWorksheetAnalyzer {
+public class StandardColumnAnalyzer extends AbstractWorksheetAnalyzer {
     @Override
     public long analyze(List<String> lines) {
         List<CephalopodProblem> problems = parseProblems(lines);
@@ -26,23 +26,17 @@ public class StandardColumnAnalyzer implements MathWorksheetAnalyzer {
 
     private CephalopodProblem extractProblem(List<String> lines, int start, int end) {
         List<Long> nums = new ArrayList<>();
-        char op = ' ';
+        char opChar = ' ';
         for (int i = 0; i < lines.size(); i++) {
             String part = lines.get(i).substring(start, Math.min(end, lines.get(i).length())).trim();
             if (part.isEmpty()) continue;
 
-            if (i == lines.size() - 1) op = part.charAt(0);
+            if (i == lines.size() - 1) opChar = part.charAt(0);
             else nums.add(Long.parseLong(part));
         }
-        return new CephalopodProblem(nums, op);
+        return new CephalopodProblem(nums, Operator.fromChar(opChar));
     }
 
-    private boolean isColumnEmpty(List<String> lines, int col) {
-        for (String line : lines) {
-            if (col < line.length() && line.charAt(col) != ' ') return false;
-        }
-        return true;
-    }
 }
 
 

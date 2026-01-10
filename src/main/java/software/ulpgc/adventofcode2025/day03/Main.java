@@ -1,11 +1,7 @@
 package software.ulpgc.adventofcode2025.day03;
-
-import software.ulpgc.adventofcode2025.day02.InvalidRule;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Main {

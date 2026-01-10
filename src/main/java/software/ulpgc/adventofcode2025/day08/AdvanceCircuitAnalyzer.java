@@ -13,7 +13,7 @@ public class AdvanceCircuitAnalyzer implements CircuitAnalyzer{
                 uf.union(rootA, rootB);
 
                 if(uf.getComponentsCount() == 1){
-                    return (long) c.a().x() * (long) c.b().x();
+                    return (long) c.a().position().x() * (long) c.b().position().x();
                 }
             }
 

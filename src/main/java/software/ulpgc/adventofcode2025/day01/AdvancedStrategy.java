@@ -8,8 +8,8 @@ public class AdvancedStrategy implements PasswordStrategy {
 
         for (int i = 0; i < steps; i++) {
             if (direction == 'R') {
-                tempPosition = (tempPosition + 1) % 100;
-            }else tempPosition = (tempPosition - 1) % 100;
+                tempPosition = (tempPosition + 1) % Dial.SIZE;
+            }else tempPosition = (tempPosition - 1 + Dial.SIZE) % Dial.SIZE;
 
             if(tempPosition == 0) zeros++;
         }

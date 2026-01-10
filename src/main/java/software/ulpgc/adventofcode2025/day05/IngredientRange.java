@@ -1,12 +1,14 @@
 package software.ulpgc.adventofcode2025.day05;
 
-public class IngredientRange implements Comparable<IngredientRange>{
-    private long start;
-    private long end;
+public record IngredientRange(long start, long end) implements Comparable<IngredientRange>{
 
-    public IngredientRange(long start, long end){
-        this.start = start;
-        this.end = end;
+    public IngredientRange{
+        if(start>end){throw new IllegalArgumentException("Start cannot be greater than end");}
+    }
+
+    public static IngredientRange parse(String input) {
+        String[] parts = input.split("-");
+        return new IngredientRange(Long.parseLong(parts[0]), Long.parseLong(parts[1]));
     }
 
     public boolean contains(long id) {
@@ -17,12 +19,10 @@ public class IngredientRange implements Comparable<IngredientRange>{
         return end - start + 1;
     }
 
-    public long getStart() {return start;}
-    public long getEnd() {return end;}
-    public void setEnd(long end) {this.end = end;}
-
     @Override
     public int compareTo(IngredientRange o) {
         return Long.compare(start, o.start);
     }
+
+
 }

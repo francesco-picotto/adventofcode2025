@@ -45,9 +45,7 @@ public class Main {
             String[] coords = line.split(",");
             boxes.add(new JunctionBox(
                     i,
-                    Double.parseDouble(coords[0]),
-                    Double.parseDouble(coords[1]),
-                    Double.parseDouble(coords[2])
+                    new Point3D(Double.parseDouble(coords[0]), Double.parseDouble(coords[1]), Double.parseDouble(coords[2]))
             ));
 
         }

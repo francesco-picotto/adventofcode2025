@@ -1,15 +1,17 @@
 package software.ulpgc.adventofcode2025.day04;
 
-public class AdvancedRemovalRule extends BasicRemovalRule{
+public class AdvancedRemovalRule implements RemovalRule{
+
+    private final RemovalRule basicRule = new BasicRemovalRule();
+
     @Override
     public int apply(char[][] grid) {
         int count = 0;
         int currentBatch;
 
-        do{
-            currentBatch = super.apply(grid);
+        while((currentBatch = basicRule.apply(grid)) > 0) {
             count += currentBatch;
-        }while(currentBatch > 0);
+        }
         return count;
     }
 }

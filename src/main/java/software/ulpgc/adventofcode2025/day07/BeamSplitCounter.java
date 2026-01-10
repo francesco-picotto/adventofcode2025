@@ -11,21 +11,35 @@ public class BeamSplitCounter implements ManifoldAnalyzer{
         Set<Integer> activeBeams = new HashSet<>();
         activeBeams.add(manifold.getStartColumn());
 
-        long splitCount = 0;
+        long totalSplits = 0;
 
-        for(int r = 0; r < manifold.getHeight(); r++){
-            Set<Integer> nextRowBeams = new HashSet<>();
-            for (int c : activeBeams){
-                char current = manifold.getAt(r, c);
-                if(current == '^'){
-                    splitCount++;
-                    nextRowBeams.add(c - 1);
-                    nextRowBeams.add(c + 1);
-                }else nextRowBeams.add(c);
-            }
-            activeBeams = nextRowBeams;
+        for (int r = 0; r < manifold.getHeight(); r++) {
+            totalSplits += countSplitsInRow(manifold, r, activeBeams);
+            activeBeams = calculateNextRowBeams(manifold, r, activeBeams);
         }
-        return splitCount;
 
+        return totalSplits;
+
+    }
+
+    private long countSplitsInRow(TachyonManifold manifold, int row, Set<Integer> activeBeams) {
+        return activeBeams.stream()
+                .filter(col -> manifold.isSplitter(row, col))
+                .count();
+    }
+
+    private Set<Integer> calculateNextRowBeams(TachyonManifold manifold, int row, Set<Integer> currentBeams) {
+        Set<Integer> nextBeams = new HashSet<>();
+
+        for (int col : currentBeams) {
+            if (manifold.isSplitter(row, col)) {
+                if (col - 1 >= 0) nextBeams.add(col - 1);
+                if (col + 1 < manifold.getWidth()) nextBeams.add(col + 1);
+            } else {
+                nextBeams.add(col);
+            }
+        }
+
+        return nextBeams;
     }
 }

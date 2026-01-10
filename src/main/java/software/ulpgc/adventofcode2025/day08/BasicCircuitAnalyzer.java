@@ -1,12 +1,16 @@
 package software.ulpgc.adventofcode2025.day08;
 import java.util.*;
 public class BasicCircuitAnalyzer implements CircuitAnalyzer{
+    private static final int CONNECTION_LIMIT = 1000;
+
     @Override
     public long analyze(List<JunctionBox> boxes, List<Connection> allConnections) {
 
         UnionFind uf = new UnionFind(boxes.size());
 
-        allConnections.stream().limit(1000).forEach(c -> uf.union(c.a().id(), c.b().id()));
+        allConnections.stream()
+                .limit(CONNECTION_LIMIT)
+                .forEach(c -> uf.union(c.a().id(), c.b().id()));
 
         return boxes.stream()
                 .map(box -> uf.find(box.id()))

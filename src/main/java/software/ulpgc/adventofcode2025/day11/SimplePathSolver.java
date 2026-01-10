@@ -6,18 +6,6 @@ public class SimplePathSolver implements ReactorSolver {
     @Override
     public long solve(ReactorMap map) {
         memo.clear();
-        return countPaths(map, "you", "out");
-    }
-
-    private long countPaths(ReactorMap map, String current, String end) {
-        if(current.equals(end)) return 1L;
-        if(memo.containsKey(current)) return memo.get(current);
-
-        long paths = map.getNeighbours(current).stream()
-                .mapToLong(neighbour -> countPaths(map, neighbour, end))
-                .sum();
-
-        memo.put(current, paths);
-        return paths;
+        return map.countPaths("you", "out", new HashMap<>());
     }
 }

@@ -47,3 +47,8 @@ Instead of using magic numbers, I used constants and well-named methods:
 In the `Main` class, I utilized the **Java Stream API** to solve the puzzle:
 ```java
 private static int solve(List<String> instructions, PasswordStrategy strategy) {
+    Dial dial = new Dial();
+    return instructions.stream()
+            .mapToInt(instruction -> dial.rotate(instruction, strategy))
+            .sum();
+}

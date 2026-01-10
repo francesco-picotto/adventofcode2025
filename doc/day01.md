@@ -1,25 +1,49 @@
-# Advent of Code 2025 - Day 01: The Chronal Dial
+# Advent of Code 2025: Day 01 - Clean Code & Architecture Report
 
-### Solution Overview
-The challenge involves simulating the rotation of a dial numbered from 0 to 99. The core difficulty lies in the fact that "Part One" and "Part Two" require different logic for counting how many times the pointer interacts with the zero position during a movement.
-
-### Software Architecture
-The project is structured following **SOLID** principles, specifically the **Single Responsibility Principle** and the **Open/Closed Principle**. By decoupling the movement logic from the counting logic, the system remains flexible and easy to extend.
-
-
-
-#### Key Components:
-* **`Dial` (The Context)**: Maintains the internal state, specifically the current pointer position which starts at 50. It exposes the `rotate` method which accepts a raw instruction and a specific strategy.
-* **`PasswordStrategy` (The Abstraction)**: An interface that defines the contract for counting zeros during or after a rotation. It allows the `Dial` to remain agnostic of the specific scoring rules.
-* **`BasicStrategy` (Part One Logic)**: Implements a mathematical approach to check if the **final** position of a movement is zero. It uses the modulo operator to determine the landing spot.
-* **`AdvancedStrategy` (Part Two Logic)**: Implements a simulation approach. It iterates through every individual step of the movement to count how many times the pointer **passes through** zero.
-* **`Main` (The Orchestrator)**: Handles file I/O using Java Streams, cleans the input data, and executes the simulation for both parts by injecting the appropriate strategy into the solver.
-
-### Design Decisions
-* **Strategy Pattern**: This was chosen to separate the *mechanism of rotation* (which is common) from the *business rules* (which change between parts).
-* **Mathematical Safety**: In `BasicStrategy`, the logic handles negative results from left turns by using the formula `((currentPosition + delta) % 100 + 100) % 100`.
-* **Decoupling**: The `Dial` class does not know which "Part" of the challenge it is solving; it simply follows the rules provided by the injected `PasswordStrategy`.
+This project implements a solution for the Day 01 challenge using **SOLID principles** and the **Strategy Design Pattern** to ensure the code is maintainable, readable, and easily extensible.
 
 ---
-### Performance Note
-While `BasicStrategy` performs in $O(1)$ time per instruction, `AdvancedStrategy` performs in $O(n)$ where $n$ is the number of steps. This is a necessary trade-off to accurately track intermediate positions during the dial rotation.
+
+## 🏗️ Architectural Overview
+
+The core architecture follows a **Decomposition Strategy** where state management is separated from business logic variations.
+
+### The Strategy Pattern
+To handle the differing requirements between Part 1 and Part 2 of the challenge, I implemented the **Strategy Pattern**.
+* **`PasswordStrategy` Interface**: Defines the contract for counting zeros during a dial rotation.
+* **`BasicStrategy`**: Implements the logic for Part 1, calculating if the final position lands on zero.
+* **`AdvancedStrategy`**: Implements the logic for Part 2, counting every time the dial passes through zero during its movement.
+
+---
+
+## 🛠️ Applied SOLID Principles
+
+### 1. Single Responsibility Principle (SRP)
+Each class in the system has one clear reason to change:
+* **`Dial`**: Manages only the state of the dial (current position) and the mechanics of rotation.
+* **`Main`**: Handles file I/O, input parsing, and execution orchestration.
+* **`BasicStrategy` / `AdvancedStrategy`**: Contain only the specific mathematical logic for the puzzle parts.
+
+### 2. Open/Closed Principle (OCP)
+The system is **open for extension** but **closed for modification**.
+* I can add a new calculation logic (e.g., a "Part 3") by creating a new class that implements `PasswordStrategy`.
+* This extension requires zero changes to the `Dial` class or the existing strategy classes.
+
+### 3. Dependency Inversion Principle (DIP)
+High-level modules do not depend on low-level modules; both depend on abstractions.
+* The `Dial` class depends on the `PasswordStrategy` interface rather than concrete implementations.
+* The specific strategy is "injected" into the `rotate` method at runtime.
+
+---
+
+## 🧼 Clean Code Highlights
+
+### Meaningful Abstractions
+Instead of using magic numbers, I used constants and well-named methods:
+* **`SIZE = 100`**: Defines the dial boundary in one central location.
+* **`calculateNewPosition`**: A private helper method that clarifies the coordinate wrapping logic ($mod\ 100$).
+
+### Declarative Execution
+In the `Main` class, I utilized the **Java Stream API** to solve the puzzle:
+```java
+private static int solve(List<String> instructions, PasswordStrategy strategy) {

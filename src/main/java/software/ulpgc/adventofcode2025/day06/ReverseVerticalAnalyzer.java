@@ -19,12 +19,15 @@ public class ReverseVerticalAnalyzer extends AbstractWorksheetAnalyzer {
         return problems.stream().mapToLong(CephalopodProblem::solve).sum();
     }
 
+
+
+
     private CephalopodProblem extractVerticalProblem(List<String> lines, int start, int end) {
         List<Long> nums = new ArrayList<>();
         char op = ' ';
 
         for(int j = end - 1; j >= start; j--){
-            String columnDigits = getColumnPart(lines.subList(0, lines.size() - 1), j);
+            String columnDigits = getColumnPart(lines.subList(0, lines.size() - 1), j).trim();
             if(!columnDigits.isEmpty()){
                 nums.add(Long.parseLong(columnDigits));
             }

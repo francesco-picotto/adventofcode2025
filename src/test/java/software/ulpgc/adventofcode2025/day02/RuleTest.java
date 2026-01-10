@@ -21,7 +21,7 @@ class RuleTest {
 
     @Test
     void testMultipleRepeatRule() {
-        InvalidRule rule = new MultipleRepeatRule();
+        IdRule rule = new MultipleRepeatRule();
 
         // Caso valido: p=3, "121212" (3 ripetizioni di "12")
         assertEquals(121212, rule.evaluate(121212));

@@ -30,9 +30,9 @@ public class MathWorksheetAnalyzerTest {
         // Column Index 2 (Right): 8, 2 with '+' operator => 10
         // Column Index 0 (Left): 3, 3 with '*' operator => 9
         List<String> input = List.of(
-                "3 8",
-                "3 2",
-                "* +"
+                "3  8  ",
+                "3  2  ",
+                "* +  "
         );
 
         ReverseVerticalAnalyzer analyzer = new ReverseVerticalAnalyzer();

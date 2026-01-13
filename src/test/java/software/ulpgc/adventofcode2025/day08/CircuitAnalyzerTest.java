@@ -2,6 +2,8 @@ package software.ulpgc.adventofcode2025.day08;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import software.ulpgc.adventofcode2025.days.day08.*;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

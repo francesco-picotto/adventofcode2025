@@ -2,6 +2,10 @@ package software.ulpgc.adventofcode2025.day03;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import software.ulpgc.adventofcode2025.days.day03.AdvancedBankRule;
+import software.ulpgc.adventofcode2025.days.day03.BankRule;
+import software.ulpgc.adventofcode2025.days.day03.SimpleBankRule;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class BankRuleTest {

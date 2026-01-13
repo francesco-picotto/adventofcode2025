@@ -1,6 +1,9 @@
 package software.ulpgc.adventofcode2025.day01;
 
 import org.junit.jupiter.api.Test;
+import software.ulpgc.adventofcode2025.days.day01.AdvancedStrategy;
+import software.ulpgc.adventofcode2025.days.day01.BasicStrategy;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class StrategyTest {

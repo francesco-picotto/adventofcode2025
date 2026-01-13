@@ -2,6 +2,11 @@ package software.ulpgc.adventofcode2025.day09;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import software.ulpgc.adventofcode2025.days.day09.GridAnalyzer;
+import software.ulpgc.adventofcode2025.days.day09.LoopRectangleAnalyzer;
+import software.ulpgc.adventofcode2025.days.day09.MaxRectangleAnalyzer;
+import software.ulpgc.adventofcode2025.days.day09.Tile;
+
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

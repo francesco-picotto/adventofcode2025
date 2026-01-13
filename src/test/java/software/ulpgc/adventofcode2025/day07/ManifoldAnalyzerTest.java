@@ -2,6 +2,10 @@ package software.ulpgc.adventofcode2025.day07;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import software.ulpgc.adventofcode2025.days.day07.BeamSplitCounter;
+import software.ulpgc.adventofcode2025.days.day07.ManifoldAnalyzer;
+import software.ulpgc.adventofcode2025.days.day07.QuantumTimelineEstimator;
+
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

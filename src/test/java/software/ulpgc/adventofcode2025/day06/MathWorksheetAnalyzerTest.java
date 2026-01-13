@@ -1,6 +1,9 @@
 package software.ulpgc.adventofcode2025.day06;
 
 import org.junit.jupiter.api.Test;
+import software.ulpgc.adventofcode2025.days.day06.ReverseVerticalAnalyzer;
+import software.ulpgc.adventofcode2025.days.day06.StandardColumnAnalyzer;
+
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

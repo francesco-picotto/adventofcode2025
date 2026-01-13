@@ -1,6 +1,10 @@
 package software.ulpgc.adventofcode2025.day02;
 
 import org.junit.jupiter.api.Test;
+import software.ulpgc.adventofcode2025.days.day02.IdRule;
+import software.ulpgc.adventofcode2025.days.day02.MultipleRepeatRule;
+import software.ulpgc.adventofcode2025.days.day02.SimpleRepeatRule;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class RuleTest {

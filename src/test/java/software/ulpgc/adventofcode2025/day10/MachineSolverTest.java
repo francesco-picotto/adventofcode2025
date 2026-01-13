@@ -1,6 +1,11 @@
 package software.ulpgc.adventofcode2025.day10;
 
 import org.junit.jupiter.api.Test;
+import software.ulpgc.adventofcode2025.days.day10.JoltageSolver;
+import software.ulpgc.adventofcode2025.days.day10.LightConfigurationSolver;
+import software.ulpgc.adventofcode2025.days.day10.Machine;
+import software.ulpgc.adventofcode2025.days.day10.MachineSolver;
+
 import java.util.List;
 import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;

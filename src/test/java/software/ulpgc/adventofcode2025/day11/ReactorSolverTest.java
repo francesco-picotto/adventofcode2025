@@ -2,10 +2,10 @@ package software.ulpgc.adventofcode2025.day11;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import software.ulpgc.adventofcode2025.days.day11.MandatoryNodeSolver;
-import software.ulpgc.adventofcode2025.days.day11.ReactorMap;
-import software.ulpgc.adventofcode2025.days.day11.ReactorSolver;
-import software.ulpgc.adventofcode2025.days.day11.SimplePathSolver;
+import software.ulpgc.adventofcode2025.days.day11.solver.MandatoryNodeSolver;
+import software.ulpgc.adventofcode2025.days.day11.domain.ReactorMap;
+import software.ulpgc.adventofcode2025.days.day11.solver.ReactorSolver;
+import software.ulpgc.adventofcode2025.days.day11.solver.SimplePathSolver;
 
 import java.util.*;
 

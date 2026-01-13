@@ -2,7 +2,12 @@ package software.ulpgc.adventofcode2025.day08;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import software.ulpgc.adventofcode2025.days.day08.*;
+import software.ulpgc.adventofcode2025.days.day08.analyzer.AdvanceCircuitAnalyzer;
+import software.ulpgc.adventofcode2025.days.day08.analyzer.BasicCircuitAnalyzer;
+import software.ulpgc.adventofcode2025.days.day08.analyzer.CircuitAnalyzer;
+import software.ulpgc.adventofcode2025.days.day08.domain.Connection;
+import software.ulpgc.adventofcode2025.days.day08.domain.JunctionBox;
+import software.ulpgc.adventofcode2025.days.day08.domain.Point3D;
 
 import java.util.ArrayList;
 import java.util.Collections;

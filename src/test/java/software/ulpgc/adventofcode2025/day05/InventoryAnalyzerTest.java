@@ -1,10 +1,10 @@
 package software.ulpgc.adventofcode2025.day05;
 
 import org.junit.jupiter.api.Test;
-import software.ulpgc.adventofcode2025.days.day05.IngredientRange;
-import software.ulpgc.adventofcode2025.days.day05.InventoryAnalyzer;
-import software.ulpgc.adventofcode2025.days.day05.StockFreshnessChecker;
-import software.ulpgc.adventofcode2025.days.day05.TotalFreshCapacityEstimator;
+import software.ulpgc.adventofcode2025.days.day05.domain.IngredientRange;
+import software.ulpgc.adventofcode2025.days.day05.analyzer.InventoryAnalyzer;
+import software.ulpgc.adventofcode2025.days.day05.analyzer.StockFreshnessChecker;
+import software.ulpgc.adventofcode2025.days.day05.analyzer.TotalFreshCapacityEstimator;
 
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;

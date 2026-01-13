@@ -1,10 +1,10 @@
 package software.ulpgc.adventofcode2025.day04;
 
 import org.junit.jupiter.api.Test;
-import software.ulpgc.adventofcode2025.days.day04.AdvancedRemovalRule;
-import software.ulpgc.adventofcode2025.days.day04.BasicRemovalRule;
-import software.ulpgc.adventofcode2025.days.day04.Grid;
-import software.ulpgc.adventofcode2025.days.day04.RemovalRule;
+import software.ulpgc.adventofcode2025.days.day04.rule.AdvancedRemovalRule;
+import software.ulpgc.adventofcode2025.days.day04.rule.BasicRemovalRule;
+import software.ulpgc.adventofcode2025.days.day04.domain.Grid;
+import software.ulpgc.adventofcode2025.days.day04.rule.RemovalRule;
 
 import static org.junit.jupiter.api.Assertions.*;
 

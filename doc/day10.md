@@ -3,6 +3,8 @@
 ## Introduction and Problem Overview
 
 ### The Problem
+Solve a linear optimization problem involving button presses that toggle light levels in a machine
+### Generalization of the problem
 This solution solves machine puzzles where buttons manipulate lights or joltage values. The challenge involves:
 - **Input**: Machine specifications with buttons and targets
 - **Goal**: Find minimum button presses to reach target state

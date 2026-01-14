@@ -3,6 +3,8 @@
 ## Introduction and Problem Overview
 
 ### The Problem
+Process a series of numeric ranges to determine how many given numbers fall within their boundaries. The second part introduces complexity by requiring you to merge overlapping ranges efficiently.
+### Generalization of the problem
 This solution analyzes inventory freshness by comparing ingredient ranges against available stock. The challenge involves:
 - **Input**: Two sections—fresh ingredient ranges (e.g., "100-200") and available IDs (e.g., "150")
 - **Goal**: Analyze relationship between fresh ranges and available inventory

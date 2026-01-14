@@ -3,6 +3,8 @@
 ## Introduction and Problem Overview
 
 ### The Problem
+Apply mathematical operators to columns of numbers, which are separated by inconsistent whitespace.
+### Generalization of the problem
 This solution parses visual math worksheet representations where problems are arranged in columns. The challenge involves:
 - **Input**: Multi-line text representing math problems in columnar format
 - **Goal**: Parse problems from visual layout and calculate results

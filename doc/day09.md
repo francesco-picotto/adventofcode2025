@@ -3,6 +3,8 @@
 ## Introduction and Problem Overview
 
 ### The Problem
+Calculate the area of complex shapes and determine if specific rectangles fall "out of bounds."
+### Generalization of the problem
 This solution finds rectangles in a 2D grid formed by tile coordinates. The challenge involves:
 - **Input**: List of 2D coordinates (x,y) representing tiles
 - **Goal**: Find maximum rectangle areas with different constraints

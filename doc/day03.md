@@ -3,6 +3,8 @@
 ## Introduction and Problem Overview
 
 ### The Problem
+Connect batteries in a grid to maximize the total "joltage" by picking specific digits from each row.
+### Generalization of the problem
 This solution tackles a bank code extraction puzzle where we need to extract specific numerical values from bank code strings by selecting digits based on maximum value constraints. The challenge involves:
 - **Input**: Bank code strings containing digit sequences
 - **Goal**: Extract specific digits by finding maximum values within constrained search ranges

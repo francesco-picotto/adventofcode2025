@@ -3,6 +3,8 @@
 ## Introduction and Problem Overview
 
 ### The Problem
+Navigate a warehouse grid to identify which reams of paper can be safely moved based on their neighbors
+### Generalization of the problem
 This solution tackles a grid cell removal puzzle where we need to remove cells from a 2D character grid based on their neighbor count. The challenge involves:
 - **Input**: A 2D character grid containing '@' and other characters
 - **Goal**: Remove '@' cells that don't have sufficient '@' neighbors

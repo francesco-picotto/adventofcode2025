@@ -3,6 +3,8 @@
 ## Introduction and Problem Overview
 
 ### The Problem
+Simulate a beam falling down a "Christmas tree" grid, splitting into two when it hits certain obstacles.
+### Generalization of the problem
 This solution simulates beam behavior through a tachyon manifold grid where beams encounter splitters. The challenge involves:
 - **Input**: 2D character grid with 'S' (start) and '^' (splitters)
 - **Goal**: Track beam propagation through splitters

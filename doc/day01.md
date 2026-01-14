@@ -3,6 +3,8 @@
 ## Introduction and Problem Overview
 
 ### The Problem
+Track a safe's dial rotations (0–99) to find how many times it lands on or passes through zero.
+### Generalization of the problem
 This solution tackles a password dial puzzle where a circular dial with 100 positions (0-99) needs to be rotated according to a series of instructions. The dial starts at position 50, and each instruction specifies:
 - **Direction**: 'L' (left/counter-clockwise) or 'R' (right/clockwise)
 - **Steps**: Number of positions to rotate (e.g., "R25" means rotate right 25 steps)

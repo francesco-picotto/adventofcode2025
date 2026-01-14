@@ -3,6 +3,8 @@
 ## Introduction and Problem Overview
 
 ### The Problem
+Connect a series of junction boxes using the shortest possible straight-line distance to form a circuit
+### Generalization of the problem
 This solution analyzes connectivity in a 3D circuit network of junction boxes. The challenge involves:
 - **Input**: 3D coordinates (x,y,z) of junction boxes
 - **Goal**: Analyze component formation as connections are added

@@ -3,6 +3,8 @@
 ## Introduction and Problem Overview
 
 ### The Problem
+Navigate a graph of interconnected components (SVR, FFT, DAC) to find a path to the output.
+### Generalization of the problem
 This solution counts paths through a directed graph representing a reactor network. The challenge involves:
 - **Input**: Adjacency list defining node connections
 - **Goal**: Count distinct paths between nodes

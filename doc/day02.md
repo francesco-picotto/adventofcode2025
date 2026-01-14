@@ -3,6 +3,9 @@
 ## Introduction and Problem Overview
 
 ### The Problem
+Identify invalid product IDs by checking for specific repeating patterns and periodic strings. 
+Part 2 requires generalizing your search to find any sequence that repeats perfectly across the ID.
+### Generalization of the problem
 This solution tackles an ID validation puzzle where we need to process ranges of IDs and identify which ones meet specific repetition pattern criteria. The challenge involves:
 - **Input**: Ranges of IDs in format "start-end" (e.g., "1102-2949")
 - **Goal**: Find all IDs within these ranges that match certain digit repetition patterns

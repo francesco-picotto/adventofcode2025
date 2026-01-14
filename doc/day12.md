@@ -3,7 +3,8 @@
 ## Introduction and Problem Overview
 
 ### The Problem
-This solution solves shape packing puzzles where geometric pieces must fit into rectangular regions. The challenge involves:
+Fit various 3D present shapes into a shipping container without any overlaps.
+The challenge involves:
 - **Input**: Shape definitions (ASCII art) + region requests (dimensions + shape counts)
 - **Goal**: Determine which regions can accommodate their required shapes
 - **Output**: Count of successfully filled regions

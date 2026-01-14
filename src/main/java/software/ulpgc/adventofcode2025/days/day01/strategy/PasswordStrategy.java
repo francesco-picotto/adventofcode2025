@@ -18,5 +18,5 @@ public interface PasswordStrategy{
      * @param direction The direction of rotation ('L' for left, 'R' for right)
      * @return The count of times position zero was encountered
      */
-    int countZeros(int currentPosition, int steps, char direction);
+    long countZeros(int currentPosition, int steps, char direction);
 }

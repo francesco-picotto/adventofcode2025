@@ -22,8 +22,8 @@ public class AdvancedStrategy implements PasswordStrategy {
      * @return The total number of times position zero was encountered during the rotation
      */
     @Override
-    public int countZeros(int currentPosition, int steps, char direction) {
-        int zeros = 0;
+    public long countZeros(int currentPosition, int steps, char direction) {
+        long zeros = 0;
         int current = currentPosition;
         for (int i = 0; i < steps; i++) {
             current = moveOneStep(current, direction);

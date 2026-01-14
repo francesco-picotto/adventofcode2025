@@ -1,268 +1,265 @@
-# Day 01: Password Dial Problem - Architecture & SOLID Principles
+# Day 01: Password Dial Solution
 
-## Problem Overview
+## Introduction and Problem Overview
 
-The password dial problem involves a circular dial with 100 positions (0-99) that starts at position 50. Given a series of rotation instructions (e.g., "R25" for rotate right 25 positions, "L10" for rotate left 10 positions), the challenge is to count how many times the dial lands on or passes through position 0.
+### The Problem
+This solution tackles a password dial puzzle where a circular dial with 100 positions (0-99) needs to be rotated according to a series of instructions. The dial starts at position 50, and each instruction specifies:
+- **Direction**: 'L' (left/counter-clockwise) or 'R' (right/clockwise)
+- **Steps**: Number of positions to rotate (e.g., "R25" means rotate right 25 steps)
 
-**Two Parts:**
-- **Part 1**: Count only if the *final position* after each rotation is zero
-- **Part 2**: Count *every time* the dial passes through zero during rotation
+The challenge has two parts:
+1. **Part One**: Count how many times the dial lands on position 0 after each rotation
+2. **Part Two**: Count how many times the dial passes through position 0 during rotations (including intermediate positions)
 
-## Project Architecture
+### Core Data Structures
 
-The project follows a clean, layered architecture organized into four main packages:
+**Dial (Domain Model)**
+- Represents the physical dial with a `position` field (starts at 50)
+- Encapsulates rotation logic and position wrapping
+- Size constant: 100 positions (0-99)
 
+**Strategy Pattern**
+- Defines different counting behaviors without changing the core dial logic
+- Allows switching between "final position only" vs "all crossings" counting
+
+**List of Instructions**
+- Simple string list where each instruction is parsed into direction + steps
+- Processed sequentially to maintain state across rotations
+
+---
+
+## Architecture and Data Flow
+
+The solution follows a clean, layered architecture with clear separation of concerns. Data flows from input → processing → domain logic → strategy → result.
+
+### Main.java - Entry Point
 ```
-day01/
-├── domain/          # Core business entities
-│   └── Dial
-├── strategy/        # Strategy pattern implementations
-│   ├── PasswordStrategy (interface)
-│   ├── BasicStrategy
-│   └── AdvancedStrategy
-├── service/         # Business logic orchestration
-│   └── PasswordProcessor
-└── Main             # Application entry point
+Input File → InputProvider → List<String> instructions
+                ↓
+    PasswordProcessor (BasicStrategy) → Part 1 Result
+                ↓
+    PasswordProcessor (AdvancedStrategy) → Part 2 Result
 ```
 
-### Architecture Layers
+**Responsibilities:**
+- Reads input file using `InputProvider`
+- Creates two `PasswordProcessor` instances with different strategies
+- Outputs results for both parts
 
-1. **Domain Layer** (`domain/`)
-    - Contains `Dial` - the core entity representing the circular dial
-    - Encapsulates dial behavior and position management
-    - Independent of counting strategies
+**Key Design Choice:** Demonstrates **Dependency Injection** by passing different strategies to the processor, making it easy to solve both parts with the same processing logic.
 
-2. **Strategy Layer** (`strategy/`)
-    - Defines the `PasswordStrategy` interface
-    - Implements two concrete strategies for counting zeros
-    - Allows runtime selection of counting algorithms
+---
 
-3. **Service Layer** (`service/`)
-    - `PasswordProcessor` orchestrates the solution
-    - Processes multiple instructions using a configured strategy
-    - Acts as the application's business logic coordinator
+### PasswordProcessor.java - Service Layer
+```
+Instructions List → iterate each instruction
+                         ↓
+                    Dial.rotate()
+                         ↓
+                  accumulate zeros
+                         ↓
+                   Total Count
+```
 
-4. **Application Layer**
-    - `Main` class serves as the entry point
-    - Demonstrates solving both parts with different strategies
+**Responsibilities:**
+- Orchestrates the solving process
+- Creates and manages the `Dial` instance
+- Accumulates zero counts across all instructions
+- Filters out null/blank instructions
 
-## SOLID Principles in Action
+**Data Flow:**
+1. Receives strategy via constructor (dependency injection)
+2. Creates a fresh dial starting at position 50
+3. For each instruction: calls `dial.rotate()` and accumulates the result
+4. Returns total zero count
 
-### 1. **Single Responsibility Principle (SRP)**
+---
 
-Each class has ONE well-defined responsibility:
+### Dial.java - Domain Model
+```
+Current Position + Instruction + Strategy
+              ↓
+    Parse instruction (direction + steps)
+              ↓
+    Strategy.countZeros() → get zeros found
+              ↓
+    calculateNewPosition() → update position
+              ↓
+    Return zeros found
+```
 
-- **`Dial`**: Manages dial position and rotation mechanics
-    - Handles position wrapping (0-99)
-    - Executes rotation instructions
-    - Does NOT decide how to count zeros
+**Responsibilities:**
+- Maintains current dial position
+- Parses rotation instructions
+- Delegates zero counting to strategy (polymorphism)
+- Updates position using modular arithmetic for wrapping
 
-- **`BasicStrategy`**: Counts zeros by checking final position only
-    - Calculates end position directly
-    - Single algorithm implementation
-
-- **`AdvancedStrategy`**: Counts zeros by checking all intermediate positions
-    - Simulates step-by-step rotation
-    - Different algorithm, different class
-
-- **`PasswordProcessor`**: Processes multiple instructions and accumulates results
-    - Orchestrates the solving process
-    - Manages the dial lifecycle
-
-### 2. **Open/Closed Principle (OCP)**
-
-The system is **open for extension, closed for modification**:
-
+**Key Logic:**
 ```java
-// CLOSED: The Dial class doesn't need modification for new strategies
-public int rotate(String instruction, PasswordStrategy strategy) {
-    char dir = instruction.charAt(0);
-    int steps = Integer.parseInt(instruction.substring(1));
-    int zerosFound = strategy.countZeros(this.position, steps, dir);
-    this.position = calculateNewPosition(this.position, steps, dir);
-    return zerosFound;
-}
+// Wrapping formula handles negative values correctly
+((current + delta) % SIZE + SIZE) % SIZE
+```
+This ensures positions always stay in range [0, 99], even when rotating left from position 0.
 
-// OPEN: New strategies can be added without changing existing code
-public class CustomStrategy implements PasswordStrategy {
+---
+
+### PasswordStrategy.java - Interface
+```java
+public interface PasswordStrategy {
+    long countZeros(int currentPosition, int steps, char direction);
+}
+```
+
+**Responsibilities:**
+- Defines the contract for zero-counting strategies
+- Enables **Open/Closed Principle**: open for extension (new strategies), closed for modification
+
+**Design Benefit:** The `Dial` class doesn't need to know *how* zeros are counted, only *that* they can be counted. This is pure polymorphism.
+
+---
+
+### BasicStrategy.java - Simple Counting
+```
+Current Position + Steps + Direction
+              ↓
+    Calculate final position directly
+              ↓
+    finalPos == 0 ? return 1 : return 0
+```
+
+**Responsibilities:**
+- Counts only if the **final position** is zero
+- Uses efficient direct calculation (no loops)
+
+**Algorithm:**
+1. Calculate delta based on direction (negative for left, positive for right)
+2. Apply modular arithmetic to get final position
+3. Return 1 if final position is 0, otherwise return 0
+
+**Use Case:** Part One of the puzzle (simpler requirement)
+
+---
+
+### AdvancedStrategy.java - Comprehensive Counting
+```
+Current Position + Steps + Direction
+              ↓
+    Loop for each step
+              ↓
+    Move one position → check if zero → increment counter
+              ↓
+    Return total zeros found
+```
+
+**Responsibilities:**
+- Counts **every time** the dial passes through position 0
+- Simulates step-by-step rotation
+
+**Algorithm:**
+1. Start from current position
+2. For each of the `steps` iterations:
+    - Move one position in the specified direction
+    - If new position is 0, increment counter
+3. Return total count
+
+**Use Case:** Part Two of the puzzle (more detailed requirement)
+
+---
+
+## SOLID Principles Applied
+
+### **S - Single Responsibility Principle**
+*Each class has one clear reason to change.*
+
+**Example: Dial.java**
+- **Only responsible for**: Managing position and rotation mechanics
+- **Does NOT**: Count zeros, process instructions list, or read input
+- **Why it matters**: If we need to change how zeros are counted, we don't touch `Dial`. If we need to change rotation logic, we don't touch counting strategies.
+
+**Example: PasswordProcessor.java**
+- **Only responsible for**: Orchestrating the solution process
+- **Does NOT**: Know about rotation mechanics or counting algorithms
+- **Why it matters**: Changes to how we count zeros or rotate the dial don't affect the processing logic.
+
+---
+
+### **O - Open/Closed Principle**
+*Open for extension, closed for modification.*
+
+**Example: Strategy Pattern**
+```java
+// Adding a new strategy doesn't require changing existing code
+public class OptimizedStrategy implements PasswordStrategy {
     @Override
-    public int countZeros(int currentPosition, int steps, char direction) {
-        // New counting logic here
+    public long countZeros(int currentPosition, int steps, char direction) {
+        // Mathematical formula to count zeros without simulation
+        // Can add this WITHOUT modifying Dial, PasswordProcessor, or other strategies
     }
 }
 ```
 
-**Key Benefits:**
-- Adding a third strategy (e.g., "count only if passing through 0 twice") requires NO changes to `Dial`, `PasswordProcessor`, or other strategies
-- The core system remains stable while being extensible
+**Why it matters**: We solved Part Two by adding `AdvancedStrategy` without changing any existing classes. The system is **open** to new counting strategies but **closed** to modification of core logic.
 
-### 3. **Liskov Substitution Principle (LSP)**
+---
 
-Any `PasswordStrategy` implementation can be substituted without breaking the system:
+### **L - Liskov Substitution Principle**
+*Subtypes must be substitutable for their base types.*
 
+**Example: Strategy Implementations**
 ```java
-// Both work identically from the client's perspective
+// Both strategies can be used interchangeably
 PasswordProcessor processor1 = new PasswordProcessor(new BasicStrategy());
 PasswordProcessor processor2 = new PasswordProcessor(new AdvancedStrategy());
 
-// Same method call, different behavior - no special handling needed
+// Both work correctly with the same interface
 long result1 = processor1.solve(instructions);
 long result2 = processor2.solve(instructions);
 ```
 
-**Contract Guarantee:**
-- All strategies accept the same parameters: `(currentPosition, steps, direction)`
-- All strategies return an integer count of zeros
-- Clients don't need to know which strategy is being used
+**Why it matters**: `Dial.rotate()` works correctly with **any** implementation of `PasswordStrategy`. We can substitute `BasicStrategy` with `AdvancedStrategy` (or any future strategy) without breaking the dial's behavior.
 
-### 4. **Interface Segregation Principle (ISP)**
+---
 
-The `PasswordStrategy` interface is **minimal and focused**:
+### **I - Interface Segregation Principle**
+*Clients shouldn't depend on interfaces they don't use.*
 
+**Example: PasswordStrategy**
 ```java
 public interface PasswordStrategy {
-    int countZeros(int currentPosition, int steps, char direction);
+    long countZeros(int currentPosition, int steps, char direction);
+    // ONLY one method - exactly what clients need, nothing more
 }
 ```
 
-**Why this matters:**
-- Implementers only need to provide ONE method
-- No "fat interface" with unused methods
-- Each strategy only implements what it needs
-- Clear contract: "If you can count zeros, you're a valid strategy"
+**Why it matters**: The interface is minimal and focused. `Dial` only needs the `countZeros()` method, so that's all the interface provides. No extra methods that implementers would have to stub out or that clients would ignore.
 
-### 5. **Dependency Inversion Principle (DIP)**
+---
 
-High-level modules depend on abstractions, not concrete implementations:
+### **D - Dependency Inversion Principle**
+*Depend on abstractions, not concretions.*
 
+**Example: PasswordProcessor Constructor**
 ```java
-// PasswordProcessor depends on the INTERFACE, not concrete classes
 public class PasswordProcessor {
-    private final PasswordStrategy strategy;  // ← Abstraction
+    private final PasswordStrategy strategy;  // Depends on interface, not concrete class
     
     public PasswordProcessor(PasswordStrategy strategy) {
-        this.strategy = strategy;
-    }
-}
-
-// Dial depends on the INTERFACE
-public int rotate(String instruction, PasswordStrategy strategy) {
-    // ...
-    int zerosFound = strategy.countZeros();  // ← Abstraction
-}
-```
-
-**Dependency Flow:**
-```
-High-level:    Main → PasswordProcessor → Dial
-                ↓          ↓              ↓
-Abstraction:   PasswordStrategy (interface)
-                         ↑
-Low-level:    BasicStrategy | AdvancedStrategy
-```
-
-**Benefits:**
-- `Main` decides which strategy to inject
-- `PasswordProcessor` and `Dial` don't care about concrete implementations
-- Easy to test with mock strategies
-- Loose coupling between layers
-
-## Design Pattern: Strategy Pattern
-
-The Strategy Pattern allows selecting an algorithm at runtime:
-
-### Problem Without Strategy Pattern:
-```java
-// BAD: Hard-coded logic with if-else
-public int rotate(String instruction, boolean useAdvanced) {
-    if (useAdvanced) {
-        // Count all intermediate zeros
-    } else {
-        // Count only final position
+        this.strategy = strategy;  // Injection of abstraction
     }
 }
 ```
 
-**Issues:**
-- Violates OCP (must modify Dial for new algorithms)
-- Violates SRP (Dial knows all counting algorithms)
-- Hard to test individual strategies
+**Why it matters**:
+- `PasswordProcessor` depends on the `PasswordStrategy` **interface**, not on `BasicStrategy` or `AdvancedStrategy` directly
+- High-level module (PasswordProcessor) doesn't depend on low-level modules (concrete strategies)
+- Both depend on abstraction (PasswordStrategy interface)
+- This makes testing easier (mock strategies) and allows runtime flexibility
 
-### Solution With Strategy Pattern:
+**Example: Main.java**
 ```java
-// GOOD: Delegate to strategy
-public int rotate(String instruction, PasswordStrategy strategy) {
-    int zerosFound = strategy.countZeros(this.position, steps, dir);
-    // ...
-}
+// High-level code controls which implementation to use
+new PasswordProcessor(new BasicStrategy()).solve(input);    // Part 1
+new PasswordProcessor(new AdvancedStrategy()).solve(input); // Part 2
 ```
 
-**Benefits:**
-- Algorithms are encapsulated in separate classes
-- Easy to add new strategies
-- Strategies can be tested independently
-- Runtime flexibility
-
-## Code Flow Example
-
-```java
-// 1. Main creates processor with chosen strategy
-PasswordProcessor processor = new PasswordProcessor(new AdvancedStrategy());
-
-// 2. Processor creates a dial and processes instructions
-Dial dial = new Dial();  // Starts at position 50
-
-// 3. For instruction "R25":
-//    a. Dial delegates counting to strategy
-//    b. AdvancedStrategy counts: 50→51→...→74→75 (passes 0? No)
-//    c. Dial updates position to 75
-//    d. Returns count: 0
-
-// 4. For instruction "L80" (from position 75):
-//    a. AdvancedStrategy counts: 75→74→...→1→0→99→98→...→95
-//    b. Passes through 0 once!
-//    c. Dial updates position to 95
-//    d. Returns count: 1
-
-// 5. Processor accumulates all counts
-```
-
-## Key Takeaways
-
-### Why This Architecture Matters:
-
-1. **Maintainability**: Each class has a clear, single purpose
-2. **Testability**: Components can be tested in isolation
-3. **Flexibility**: New strategies can be added without risk
-4. **Reusability**: Strategies can be reused in other contexts
-5. **Clarity**: The code structure mirrors the problem domain
-
-### SOLID in One Sentence Each:
-
-- **SRP**: "One class, one job" - Each class does exactly one thing
-- **OCP**: "Extend, don't modify" - Add features without changing existing code
-- **LSP**: "Swap freely" - All strategies work the same way to clients
-- **ISP**: "Small contracts" - Simple, focused interface with one method
-- **DIP**: "Depend on abstractions" - Classes use interfaces, not concrete types
-
-### Real-World Analogy:
-
-Think of this like a restaurant:
-- **Dial** = The kitchen equipment (oven, stove)
-- **PasswordStrategy** = Recipe interface (all recipes have "cook" method)
-- **BasicStrategy/AdvancedStrategy** = Different recipes (same equipment, different techniques)
-- **PasswordProcessor** = The head chef (coordinates the cooking)
-- **Main** = The restaurant manager (decides which recipes to use today)
-
-The kitchen doesn't change when you add new recipes. You just need new recipes that follow the same format!
-
-## Conclusion
-
-This project demonstrates that good architecture isn't about complexity—it's about clarity and flexibility. By applying SOLID principles and the Strategy Pattern, we've created a system that is:
-
-- Easy to understand (clear separation of concerns)
-- Easy to extend (add strategies without fear)
-- Easy to test (each component is independent)
-- Easy to maintain (changes are localized)
-
-The extra structure pays dividends when requirements change, new features are needed, or bugs need to be fixed.
+---

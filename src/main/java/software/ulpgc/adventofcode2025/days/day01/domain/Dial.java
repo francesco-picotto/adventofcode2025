@@ -17,10 +17,10 @@ public class Dial {
      * @param strategy The strategy used to count how many times position zero is encountered
      * @return The number of times position zero was encountered during this rotation
      */
-    public int rotate(String instruction, PasswordStrategy strategy) {
+    public long rotate(String instruction, PasswordStrategy strategy) {
         char dir = instruction.charAt(0);
         int steps = Integer.parseInt(instruction.substring(1));
-        int zerosFound = strategy.countZeros(this.position, steps, dir);
+        long zerosFound = strategy.countZeros(this.position, steps, dir);
         this.position = calculateNewPosition(this.position, steps, dir);
         return zerosFound;
     }

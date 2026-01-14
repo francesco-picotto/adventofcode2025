@@ -24,7 +24,7 @@ public class BasicStrategy implements PasswordStrategy {
      * @return 1 if the final position is zero, 0 otherwise
      */
     @Override
-    public int countZeros(int currentPosition, int steps, char direction) {
+    public long countZeros(int currentPosition, int steps, char direction) {
         int delta = (direction == 'L') ? -steps : steps;
         int finalPos = ((currentPosition + delta) % Dial.SIZE + Dial.SIZE) % Dial.SIZE;
         return isOnZero(finalPos);

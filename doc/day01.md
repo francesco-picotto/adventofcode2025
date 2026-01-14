@@ -1,4 +1,4 @@
-# Day 01: Password Dial Solution
+# Day 01: Secret Entrance
 
 ## Introduction and Problem Overview
 

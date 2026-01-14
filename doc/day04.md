@@ -1,4 +1,4 @@
-# Day 04: Grid Cell Removal Solution
+# Day 04: Printing Department
 
 ## Introduction and Problem Overview
 

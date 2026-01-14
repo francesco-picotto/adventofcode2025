@@ -1,4 +1,4 @@
-# Day 02: ID Range Validation Solution
+# Day 02: Gift Shop
 
 ## Introduction and Problem Overview
 

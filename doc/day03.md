@@ -1,4 +1,4 @@
-# Day 03: Bank Code Value Extraction Solution
+# Day 03: Lobby
 
 ## Introduction and Problem Overview
 

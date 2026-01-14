@@ -1,4 +1,4 @@
-# Day 09: Rectangle Analysis in 2D Grid
+# Day 09: Movie Theater
 
 ## Introduction and Problem Overview
 

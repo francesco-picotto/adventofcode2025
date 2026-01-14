@@ -1,4 +1,4 @@
-# Day 06: Math Worksheet Parser Solution
+# Day 06: Trash Compactor
 
 ## Introduction and Problem Overview
 

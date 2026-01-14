@@ -1,4 +1,4 @@
-# Day 08: Circuit Component Connectivity Analysis
+# Day 08: Playground
 
 ## Introduction and Problem Overview
 

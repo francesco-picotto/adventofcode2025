@@ -1,4 +1,4 @@
-# Day 11: Reactor Network Path Counting
+# Day 11: Reactor
 
 ## Introduction and Problem Overview
 

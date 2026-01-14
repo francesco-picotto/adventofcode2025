@@ -1,4 +1,4 @@
-# Day 05: Inventory Freshness Analysis Solution
+# Day 05: Cafeteria
 
 ## Introduction and Problem Overview
 

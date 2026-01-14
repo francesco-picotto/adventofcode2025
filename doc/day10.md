@@ -1,4 +1,4 @@
-# Day 10: Machine Button Puzzle Solver
+# Day 10: Factory
 
 ## Introduction and Problem Overview
 

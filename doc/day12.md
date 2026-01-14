@@ -1,4 +1,4 @@
-# Day 12: Polyomino Packing Puzzle Solver
+# Day 12: Christmas Tree Farm
 
 ## Introduction and Problem Overview
 

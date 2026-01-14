@@ -1,4 +1,4 @@
-# Day 07: Tachyon Manifold Beam Simulation
+# Day 07: Laboratories
 
 ## Introduction and Problem Overview
 
